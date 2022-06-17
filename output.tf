@@ -16,5 +16,5 @@ output "private_key" {
 
 output "output_dir" {
   description = "Output dir reference"
-  value       = var.download_openvpn_configs ? null_resource.openvpn_download_configurations.triggers.output_dir : ""
+  value       = var.download_openvpn_configs ? null_resource.openvpn_download_configurations.0.triggers.output_dir : ""
 }
