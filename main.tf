@@ -207,6 +207,7 @@ resource "null_resource" "openvpn_download_configurations" {
 
   triggers = {
     trigger = timestamp()
+    output_dir = var.output_dir
   }
 
   depends_on = [null_resource.openvpn_update_users_script]

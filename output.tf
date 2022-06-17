@@ -13,3 +13,8 @@ output "private_key" {
   value       = tls_private_key.ssh-key
   sensitive   = true
 }
+
+output "output_dir" {
+  description = "Output dir reference"
+  value       = var.download_openvpn_configs ? null_resource.openvpn_download_configurations.triggers.output_dir : ""
+}
