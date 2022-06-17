@@ -9,7 +9,7 @@ output "public_address" {
 }
 
 output "private_key" {
-  description = "VPN public address"
-  value       = google_compute_address.default
+  description = "VPN private key"
+  value       = tls_private_key.ssh-key
   sensitive   = true
 }
