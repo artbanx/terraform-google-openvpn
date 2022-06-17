@@ -105,6 +105,17 @@ variable "route_only_private_ips" {
   default     = false
 }
 
+variable "download_openvpn_configs" {
+  description = "Whether to download openvpn configs or not"
+  default     = true
+}
+
+variable "authorized_ip_ranges" {
+  description = "IP Ranges that are allowed to access the OpenVPN VM using ssh"
+  type        = set(string)
+  default     = ["0.0.0.0/0"]
+}
+
 variable "install_script_url" {
   description = "The commit sha we are using in order to determine which version of the install file to use: https://raw.githubusercontent.com/angristan/openvpn-install/master/openvpn-install.sh"
   type        = string

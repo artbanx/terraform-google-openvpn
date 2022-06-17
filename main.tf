@@ -29,7 +29,7 @@ resource "google_compute_firewall" "allow-external-ssh" {
     ports    = ["22"]
   }
 
-  source_ranges = ["0.0.0.0/0"]
+  source_ranges = var.authorized_ip_ranges
   target_tags   = local.ssh_tag
 }
 
@@ -38,10 +38,12 @@ resource "google_compute_firewall" "allow-openvpn-udp-port" {
   network     = var.network
   description = "Creates firewall rule targeting the openvpn instance"
 
+  /*
   allow {
     protocol = "tcp"
     ports    = ["1194"]
   }
+  */
 
   allow {
     protocol = "udp"
@@ -69,14 +71,6 @@ resource "local_sensitive_file" "private_key" {
   content         = tls_private_key.ssh-key.private_key_pem
   filename        = "${var.output_dir}/${local.private_key_file}"
   file_permission = "0400"
-}
-
-resource "random_id" "this" {
-  byte_length = "8"
-}
-
-resource "random_id" "password" {
-  byte_length = "16"
 }
 
 // Use a persistent disk so that it can be remounted on another instance.
@@ -209,6 +203,8 @@ resource "null_resource" "openvpn_update_users_script" {
 
 # Download user configurations to output_dir
 resource "null_resource" "openvpn_download_configurations" {
+  count = download_openvpn_configs ? 1 : 0
+
   triggers = {
     trigger = timestamp()
   }
