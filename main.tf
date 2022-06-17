@@ -203,7 +203,7 @@ resource "null_resource" "openvpn_update_users_script" {
 
 # Download user configurations to output_dir
 resource "null_resource" "openvpn_download_configurations" {
-  count = download_openvpn_configs ? 1 : 0
+  count = var.download_openvpn_configs ? 1 : 0
 
   triggers = {
     trigger = timestamp()
